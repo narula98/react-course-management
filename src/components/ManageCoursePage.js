@@ -1,7 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import { toast } from 'react-toastify';
 import CourseForm from './CourseForm';
-import {saveCourse, getCourseBySlug} from '../api/courseApi';
+import * as CourseActions from '../flux-management/actions/courseActions'
+import CourseStore from '../flux-management/stores/courseStore'
+import {getCourseBySlug} from '../api/courseApi'
 
 function ManageCoursePage(props) {
   const [course, setCourse] = useState({
@@ -52,13 +54,12 @@ function ManageCoursePage(props) {
     if(!formIsValid()) return;
     event.preventDefault();
     try{
-      await saveCourse(course);
+      await CourseActions.saveCourse(course);
       props.history.push("/courses");
       toast.success("Course saved")
     } catch(e) {
       toast.error(e);
     }
-    
   }
 
   return (

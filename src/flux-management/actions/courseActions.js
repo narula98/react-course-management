@@ -14,3 +14,16 @@ export const saveCourse = async (course) => {
     throw new Error(e);
   }
 };
+
+export const loadCourse = async ()=>{
+  try {
+    const resp = await courseApi.getCourses();
+    dispatcher.dispatch({
+      actionType:"LOAD_COURSES",
+      courses: resp
+    })
+    return resp;
+  } catch (e) {
+    throw new Error(e);
+  }
+}
